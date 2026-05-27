@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Question for Thalia 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:#fff0f5;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── Petals ── */
+.petal-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.petal{position:absolute;opacity:0;animation:fall linear infinite;user-select:none}
+@keyframes fall{
+  0%  {opacity:0;transform:translateY(-30px) rotate(0deg) scale(1)}
+  8%  {opacity:.85}
+  92% {opacity:.5}
+  100%{opacity:0;transform:translateY(108vh) rotate(420deg) scale(.5)}
+}
+
+/* ── PAGE SYSTEM ── */
+.page{
+  display:none;min-height:100vh;position:relative;z-index:1;
+  flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px;text-align:center;
+  animation:pageIn .5s ease both;
+}
+.page.active{display:flex}
+@keyframes pageIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+
+/* ── PAGE 1 ── */
+.ask-envelope{
+  font-size:72px;margin-bottom:20px;
+  animation:wobble 2.4s ease-in-out infinite;
+}
+@keyframes wobble{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+
+.ask-from{
+  font-family:'Dancing Script',cursive;
+  font-size:19px;color:#d4547a;margin-bottom:8px;
+}
+.ask-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,9vw,64px);font-weight:700;
+  color:#881337;line-height:1.08;margin-bottom:14px;
+}
+.ask-title span{
+  font-style:italic;
+  background:linear-gradient(135deg,#f43f5e,#e879a0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.ask-sub{
+  font-size:16px;color:#9d3557;font-weight:300;
+  max-width:420px;line-height:1.75;margin-bottom:36px;
+}
+
+.ask-card{
+  background:#fff;border:1.5px solid #fecdd3;border-radius:24px;
+  padding:30px 36px;max-width:420px;width:100%;
+  box-shadow:0 8px 44px rgba(180,34,79,.11);margin-bottom:38px;
+}
+.ask-card-icon{font-size:30px;margin-bottom:12px}
+.ask-card-text{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:19px;color:#881337;line-height:1.65;
+}
+
+.btn-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:22px;flex-wrap:wrap;
+}
+.btn-yes{
+  background:linear-gradient(135deg,#f43f5e,#e11d48);
+  color:#fff;border:none;border-radius:999px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;cursor:pointer;
+  padding:16px 44px;font-size:18px;
+  box-shadow:0 6px 24px rgba(244,63,94,.4);
+  transition:transform .2s,box-shadow .2s,font-size .3s ease,padding .3s ease;
+  white-space:nowrap;
+}
+.btn-yes:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 12px 36px rgba(244,63,94,.5)}
+.btn-yes:active{transform:scale(.97)}
+
+.btn-no{
+  background:#fff;color:#d4547a;
+  border:1.5px solid #fecdd3;border-radius:999px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:600;cursor:pointer;
+  padding:12px 28px;font-size:15px;
+  transition:all .25s;white-space:nowrap;
+}
+.btn-no:hover{border-color:#f9a8d4;color:#f43f5e}
+
+.no-msg{
+  height:26px;font-size:13.5px;color:#f43f5e;
+  font-style:italic;margin-top:10px;
+  transition:opacity .3s;opacity:0;
+}
+
+/* ── PAGE 2 ── */
+.yay-confetti{font-size:60px;margin-bottom:12px;animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes popIn{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(0)}}
+
+.yay-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(38px,9vw,66px);font-weight:700;
+  color:#881337;line-height:1.08;margin-bottom:12px;
+  animation:fadeUp .6s .1s ease both;
+}
+.yay-sub{
+  font-family:'Dancing Script',cursive;
+  font-size:23px;color:#d4547a;margin-bottom:38px;
+  animation:fadeUp .6s .2s ease both;
+}
+
+.date-card{
+  background:#fff;border:1.5px solid #fecdd3;border-radius:28px;
+  padding:38px 38px 34px;max-width:500px;width:100%;
+  box-shadow:0 10px 52px rgba(180,34,79,.12);
+  animation:fadeUp .7s .3s ease both;
+}
+.date-card-header{
+  font-family:'Playfair Display',serif;font-size:22px;
+  color:#881337;font-weight:700;margin-bottom:6px;
+}
+.date-card-sub{font-size:13.5px;color:#d4547a;margin-bottom:30px}
+
+.date-form{display:flex;flex-direction:column;gap:20px}
+.input-group{display:flex;flex-direction:column;gap:8px;text-align:left}
+.input-label{
+  font-size:11.5px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:#9d3557;
+}
+.date-input{
+  width:100%;padding:13px 16px;
+  border:1.5px solid #fecdd3;border-radius:14px;
+  font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;
+  color:#4a1c2e;background:#fff;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;appearance:none;
+}
+.date-input:focus{border-color:#f43f5e;box-shadow:0 0 0 4px rgba(244,63,94,.1)}
+.time-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.activity-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.activity-pill{
+  padding:12px 14px;border:1.5px solid #fecdd3;border-radius:12px;
+  font-size:13.5px;font-weight:500;color:#9d3557;
+  cursor:pointer;transition:all .2s;background:#fff;text-align:center;
+  user-select:none;
+}
+.activity-pill:hover{border-color:#f9a8d4;background:#fff0f5;color:#c0185a}
+.activity-pill.selected{
+  background:linear-gradient(135deg,#f43f5e,#e11d48);
+  color:#fff;border-color:transparent;
+  box-shadow:0 4px 14px rgba(244,63,94,.3);
+}
+
+.btn-confirm{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,#f43f5e,#e11d48);
+  color:#fff;border:none;border-radius:14px;
+  font-size:16px;font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  cursor:pointer;transition:all .2s;
+  box-shadow:0 6px 22px rgba(244,63,94,.4);margin-top:4px;
+}
+.btn-confirm:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(244,63,94,.5)}
+.btn-confirm:active{transform:scale(.98)}
+
+/* ── PAGE 3 ── */
+.set-icon{font-size:62px;margin-bottom:16px;animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both}
+.set-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(30px,7vw,52px);font-weight:700;
+  color:#881337;margin-bottom:10px;
+  animation:fadeUp .6s .1s ease both;
+}
+.set-sub{
+  font-family:'Dancing Script',cursive;
+  font-size:22px;color:#d4547a;margin-bottom:34px;
+  animation:fadeUp .6s .2s ease both;
+}
+
+.date-summary{
+  background:#fff;border:1.5px solid #fecdd3;border-radius:24px;
+  padding:32px 36px;max-width:460px;width:100%;
+  box-shadow:0 8px 44px rgba(180,34,79,.1);
+  animation:fadeUp .7s .3s ease both;
+}
+.ds-row{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 0;border-bottom:1px solid #fff0f5;
+}
+.ds-row:last-child{border-bottom:none}
+.ds-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:#fff0f5;display:flex;align-items:center;
+  justify-content:center;font-size:22px;flex-shrink:0;
+}
+.ds-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#d4547a}
+.ds-value{font-size:15.5px;font-weight:600;color:#4a1c2e}
+
+.countdown-box{
+  background:linear-gradient(135deg,#fff0f5,#ffe4ed);
+  border:1.5px solid #fecdd3;border-radius:22px;
+  padding:24px 30px;max-width:460px;width:100%;
+  margin-top:18px;animation:fadeUp .7s .45s ease both;
+}
+.countdown-label{
+  font-size:11.5px;color:#d4547a;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;
+}
+.countdown-nums{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.cd-unit{text-align:center}
+.cd-num{
+  font-family:'Playfair Display',serif;
+  font-size:36px;font-weight:700;color:#881337;line-height:1;
+  min-width:52px;display:block;
+}
+.cd-lbl{font-size:11px;color:#d4547a;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-top:4px}
+
+.btn-share{
+  margin-top:22px;padding:14px 36px;
+  background:#fff;color:#c0185a;
+  border:1.5px solid #fecdd3;border-radius:999px;
+  font-size:14px;font-weight:700;cursor:pointer;
+  transition:all .2s;animation:fadeUp .7s .55s ease both;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.btn-share:hover{background:#fff0f5;border-color:#f9a8d4;transform:translateY(-2px)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ── Responsive ── */
+@media(max-width:560px){
+  .ask-card{padding:24px 22px}
+  .date-card{padding:28px 22px 26px}
+  .date-summary{padding:26px 22px}
+  .countdown-box{padding:20px 18px}
+  .activity-grid{grid-template-columns:1fr 1fr}
+  .time-grid{grid-template-columns:1fr}
+  .cd-num{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<div class="petal-bg" id="petalBg"></div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 1 — THE ASK
+══════════════════════════════════════════════ -->
+<div class="page active" id="page1">
+  <div class="ask-envelope">💌</div>
+  <p class="ask-from">K has a very important question for you…</p>
+  <h1 class="ask-title">Hey <span>Thalia,</span></h1>
+  <p class="ask-sub">
+    I've been thinking about this for a while now,
+    and I just had to ask you something special…
+  </p>
+
+  <div class="ask-card">
+    <div class="ask-card-icon">🌹</div>
+    <p class="ask-card-text">
+      "Would you like to go on a date with me?
+      I promise it'll be a night you won't forget."
+    </p>
+  </div>
+
+  <div class="btn-row" id="btnRow">
+    <button class="btn-yes" id="btnYes" onclick="goToYes()">
+      Yes! 💗
+    </button>
+    <button class="btn-no" id="btnNo" onclick="pressedNo()">
+      No…
+    </button>
+  </div>
+  <p class="no-msg" id="noMsg">Are you sure? 🥺 Try again…</p>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 2 — DATE PICKER
+══════════════════════════════════════════════ -->
+<div class="page" id="page2">
+  <div class="yay-confetti">🎉</div>
+  <h2 class="yay-title">She said YES! 💕</h2>
+  <p class="yay-sub">Now let's plan something perfect, Thalia…</p>
+
+  <div class="date-card">
+    <p class="date-card-header">📅 Pick Your Perfect Date</p>
+    <p class="date-card-sub">When are you free? What sounds amazing?</p>
+
+    <div class="date-form">
+
+      <div class="input-group">
+        <label class="input-label">📅 Choose a date</label>
+        <input type="date" class="date-input" id="dateInput">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">⏰ What time works for you?</label>
+        <div class="time-grid">
+          <input type="time" class="date-input" id="timeInput" value="18:00">
+          <select class="date-input" id="vibeInput">
+            <option value="">🌤 Pick a vibe</option>
+            <option value="Morning date ☀️">Morning date ☀️</option>
+            <option value="Afternoon hangout 🌸">Afternoon hangout 🌸</option>
+            <option value="Evening date 🌙">Evening date 🌙</option>
+            <option value="Late night vibes 🌟">Late night vibes 🌟</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">💝 What kind of date?</label>
+        <div class="activity-grid" id="activityGrid">
+          <div class="activity-pill" onclick="selectActivity(this,'🍽️ Dinner date')">🍽️ Dinner</div>
+          <div class="activity-pill" onclick="selectActivity(this,'🎬 Movie night')">🎬 Movie night</div>
+          <div class="activity-pill" onclick="selectActivity(this,'🌿 Picnic')">🌿 Picnic</div>
+          <div class="activity-pill" onclick="selectActivity(this,'🎡 Adventure')">🎡 Adventure</div>
+          <div class="activity-pill" onclick="selectActivity(this,'🍦 Coffee & dessert')">🍦 Coffee & sweets</div>
+          <div class="activity-pill" onclick="selectActivity(this,'🌅 Sunset walk')">🌅 Sunset walk</div>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">💬 Anything you want K to know?</label>
+        <input type="text" class="date-input" id="noteInput"
+          placeholder="e.g. I love surprises! 🥰">
+      </div>
+
+      <button class="btn-confirm" onclick="confirmDate()">
+        Confirm Our Date 💕
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 3 — DATE CONFIRMED
+══════════════════════════════════════════════ -->
+<div class="page" id="page3">
+  <div class="set-icon">💌</div>
+  <h2 class="set-title">It's a date, Thalia! 🎀</h2>
+  <p class="set-sub">K is already counting down the minutes…</p>
+
+  <div class="date-summary" id="dateSummary"></div>
+
+  <div class="countdown-box">
+    <p class="countdown-label">⏳ Counting down to your date</p>
+    <div class="countdown-nums" id="countdown"></div>
+  </div>
+
+  <button class="btn-share" onclick="shareDate()">
+    📸 Screenshot & Send to K 💕
+  </button>
+</div>
+
+<script>
+/* ── Floating petals ─────────────────────────── */
+const petalEmojis = ['🌸','🌺','🌷','💗','💕','🌹','✿','🌼'];
+const bg = document.getElementById('petalBg');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+  p.style.left = (Math.random() * 100) + '%';
+  p.style.fontSize = (10 + Math.random() * 17) + 'px';
+  p.style.animationDuration = (9 + Math.random() * 13) + 's';
+  p.style.animationDelay = (Math.random() * 16) + 's';
+  bg.appendChild(p);
+}
+
+/* ── NO button logic ─────────────────────────── */
+let noCount = 0;
+const noMessages = [
+  'Are you sure? 🥺 Try again…',
+  'No? But look how big YES is getting! 👀',
+  'Come on Thalia… 🥺💕',
+  'The YES button misses you…',
+  'Pretty please? 🌸',
+  'K will be so sad… 😢',
+  'Your heart is saying YES, trust it! 💗',
+  'Okay fine… just kidding, try YES! 😂💕',
+];
+
+function pressedNo() {
+  noCount++;
+  const yes = document.getElementById('btnYes');
+  const no  = document.getElementById('btnNo');
+  const msg = document.getElementById('noMsg');
+
+  /* YES grows */
+  const curSize  = parseFloat(yes.style.fontSize)    || 18;
+  const curPadV  = parseFloat(yes.style.paddingTop)  || 16;
+  const curPadH  = parseFloat(yes.style.paddingLeft) || 44;
+  yes.style.fontSize     = Math.min(curSize + 4, 50) + 'px';
+  yes.style.paddingTop   = Math.min(curPadV + 4, 38) + 'px';
+  yes.style.paddingBottom= Math.min(curPadV + 4, 38) + 'px';
+  yes.style.paddingLeft  = Math.min(curPadH + 8, 88) + 'px';
+  yes.style.paddingRight = Math.min(curPadH + 8, 88) + 'px';
+
+  /* NO shrinks */
+  const curNoSize = parseFloat(no.style.fontSize)    || 15;
+  const curNoPadV = parseFloat(no.style.paddingTop)  || 12;
+  const curNoPadH = parseFloat(no.style.paddingLeft) || 28;
+  no.style.fontSize     = Math.max(curNoSize - 2, 7)  + 'px';
+  no.style.paddingTop   = Math.max(curNoPadV - 2, 4)  + 'px';
+  no.style.paddingBottom= Math.max(curNoPadV - 2, 4)  + 'px';
+  no.style.paddingLeft  = Math.max(curNoPadH - 4, 6)  + 'px';
+  no.style.paddingRight = Math.max(curNoPadH - 4, 6)  + 'px';
+
+  /* Message */
+  const idx = Math.min(noCount - 1, noMessages.length - 1);
+  msg.textContent = noMessages[idx];
+  msg.style.opacity = '1';
+
+  /* After 8 presses, auto-yes */
+  if (noCount >= 8) {
+    msg.textContent = "I'm pressing YES for you! 😂💕";
+    setTimeout(goToYes, 1200);
+  }
+}
+
+/* ── Yes ─────────────────────────────────────── */
+function goToYes() {
+  showPage('page2');
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const inp = document.getElementById('dateInput');
+  inp.value = tomorrow.toISOString().split('T')[0];
+  inp.min   = new Date().toISOString().split('T')[0];
+}
+
+/* ── Activity pills ──────────────────────────── */
+let selectedActivity = '';
+function selectActivity(el, val) {
+  document.querySelectorAll('.activity-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedActivity = val;
+}
+
+/* ── Confirm date ────────────────────────────── */
+function confirmDate() {
+  const dateVal = document.getElementById('dateInput').value;
+  const timeVal = document.getElementById('timeInput').value;
+  const vibeVal = document.getElementById('vibeInput').value;
+  const noteVal = document.getElementById('noteInput').value.trim();
+
+  if (!dateVal) { alert('Please pick a date! 📅'); return; }
+  if (!timeVal) { alert('Please pick a time! ⏰'); return; }
+
+  const dateObj = new Date(dateVal + 'T' + timeVal);
+  const fmtDate = dateObj.toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+  const fmtTime = dateObj.toLocaleTimeString('en-US', {
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  const rows = [
+    { icon:'📅', label:'Date',     value: fmtDate },
+    { icon:'⏰', label:'Time',     value: fmtTime },
+    { icon:'🎀', label:'Vibe',     value: vibeVal || 'A perfect evening 🌙' },
+    { icon:'💝', label:'Activity', value: selectedActivity || '✨ A lovely surprise!' },
+  ];
+  if (noteVal) rows.push({ icon:'💬', label:'Note from Thalia', value: noteVal });
+
+  document.getElementById('dateSummary').innerHTML = rows.map(r => `
+    <div class="ds-row">
+      <div class="ds-icon">${r.icon}</div>
+      <div>
+        <div class="ds-label">${r.label}</div>
+        <div class="ds-value">${r.value}</div>
+      </div>
+    </div>
+  `).join('');
+
+  showPage('page3');
+  startCountdown(dateObj);
+}
+
+/* ── Countdown ───────────────────────────────── */
+function startCountdown(target) {
+  function tick() {
+    const diff = target - new Date();
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML =
+        '<p style="color:#881337;font-weight:700;font-size:20px;text-align:center">🎉 It\'s TODAY! 💕</p>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('countdown').innerHTML =
+      [['Days',d],['Hours',h],['Mins',m],['Secs',s]].map(([l,n]) =>
+        `<div class="cd-unit">
+           <span class="cd-num">${String(n).padStart(2,'0')}</span>
+           <div class="cd-lbl">${l}</div>
+         </div>`
+      ).join('');
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+/* ── Share ───────────────────────────────────── */
+function shareDate() {
+  if (navigator.share) {
+    navigator.share({ title: "It's a date! 💕", text: "Thalia said YES! 🎉" })
+      .catch(() => {});
+  } else {
+    alert('Screenshot this page and send it to K! 💕📸');
+  }
+}
+
+/* ── Page switcher ───────────────────────────── */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById(id);
+  pg.classList.add('active');
+  pg.style.animation = 'none';
+  requestAnimationFrame(() => { pg.style.animation = ''; });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
